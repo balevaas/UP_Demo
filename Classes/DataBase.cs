@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Data;
 
 namespace UP_Demo.Classes
@@ -14,7 +9,6 @@ namespace UP_Demo.Classes
         /// Объявление строки подключения с БД
         /// </summary>
         SqlConnection sqlConnection = new SqlConnection(@"Server=Anastasia-ПК;Database=Trade;Trusted_Connection=true;MultipleActiveResultSets=true;TrustServerCertificate=true;encrypt=false");
-
         /// <summary>
         /// Метод для открытия соединения с БД
         /// </summary>
@@ -26,7 +20,6 @@ namespace UP_Demo.Classes
                 sqlConnection.Open();
             }
         }
-
         /// <summary>
         /// Метод для закрытия соединения с БД, обратный методу выше
         /// </summary>
@@ -37,7 +30,6 @@ namespace UP_Demo.Classes
                 sqlConnection.Close();
             }
         }
-
         /// <summary>
         /// Метод, возвращающий строку подключения
         /// </summary>
@@ -46,13 +38,12 @@ namespace UP_Demo.Classes
         {
             return sqlConnection;
         }
-
         /// <summary>
         /// Метод для обработки запросов типа Select
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public DataTable SqlSelect(String s)
+        public DataTable SqlSelect(string s)
         {
             SqlCommand command = new SqlCommand(s); // создаем команду с запросом
             command.Connection = GetConnection();   // открываем соединение с БД
@@ -61,21 +52,20 @@ namespace UP_Demo.Classes
             adapter.Fill(table);    // через адаптер заполняем ее данными
             return table;           // возвращаем таблицу
         }
-
         /// <summary>
         /// Метод для обработки запросов типа Insert
         /// </summary>
         /// <param name="querystring"></param>
         /// <returns></returns>
-        public SqlCommand SqlInsert(String querystring)
+        public SqlCommand SqlInsert(string querystring)
         {
-            OpenConnection();
-            SqlCommand command = new SqlCommand(querystring);
-            command.Connection = GetConnection();
-            command.ExecuteNonQuery();
-            CloseConnection();
-            return command;
+            OpenConnection();   // открыли соединение
+            SqlCommand command = new SqlCommand(querystring); //передали команду
+            command.Connection = GetConnection();   //передали строку подключения
+            command.ExecuteNonQuery();  // просто выполняет sql-выражение и возвращает количество измененных записей.
+                                        // Подходит для sql-выражений INSERT, UPDATE, DELETE, CREATE.
+            CloseConnection();      // закрыли соединение
+            return command;         // вернули команду
         }
-
     }
 }

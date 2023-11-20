@@ -1,4 +1,4 @@
-namespace UP_Demo
+namespace UP_Demo.Classes
 {
     internal static class Program
     {
